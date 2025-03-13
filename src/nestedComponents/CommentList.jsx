@@ -31,18 +31,18 @@ const CommentList = () => {
       setComments([...comments, newCommentObj]); //
       setNewComment("");
     } else {
-      setComments(updateReplies(comments, parentId, newCommentObj));
+      setComments(createReplies(comments, parentId, newCommentObj));
     }
   };
 
-  const updateReplies = (comments, parentId, newCommentObj) => {
+  const createReplies = (comments, parentId, newCommentObj) => {
     return comments.map((comment) => {
       if (comment.id === parentId) {
         return { ...comment, replies: [...comment.replies, newCommentObj] };
       }
       return {
         ...comment,
-        replies: updateReplies(comment.replies, parentId, newCommentObj), //recursion
+        replies: createReplies(comment.replies, parentId, newCommentObj), //recursion
       };
     });
   };
