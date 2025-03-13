@@ -1,42 +1,35 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useDebounce from "./useDebounce";
 
-export default function Search() {
+export default function DebounceSearchApi() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState([]);
   const [users, setUsers] = useState([]);
-  const debounceSearchTerm = useDebounce(searchTerm, 500);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const debounceTerm = useDebounce(searchTerm, 500);
 
-  //fetch users
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/users"
-        );
-        const data = await response.json();
+        const res = await fetch("https://jsonplaceholder.typicode.com/users");
+        const data = await res.json();
         setUsers(data);
-        console.log(data);
       } catch (error) {
-        console.log("error", error);
+        console.log(error);
       }
     };
     fetchUsers();
-  });
+  }, []);
 
-  //filter users
   useEffect(() => {
-    if (debounceSearchTerm) {
+    if (debounceTerm) {
       const filteredUsers = users.filter((user) => {
-        return user.name
-          .toLowerCase()
-          .includes(debounceSearchTerm.toLowerCase());
+        return user.name.toLowerCase().includes(debounceTerm.toLowerCase());
       });
       setFilteredUsers(filteredUsers);
     } else {
       setFilteredUsers(users);
     }
-  }, [debounceSearchTerm, users]);
+  }, [debounceTerm, users]);
   return (
     <div className="p-4">
       <input

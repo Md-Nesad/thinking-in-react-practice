@@ -1,10 +1,10 @@
 import React from "react";
-import Search from "./debounce/DebounceSearchApi";
+import CommentList from "./nestedComponents/CommentList";
 
 export default function App() {
   return (
-    <>
-      <Search />
-    </>
+    <div>
+      <CommentList />
+    </div>
   );
 }
