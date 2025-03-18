@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 export default function InfiniteScroll() {
-  const [posts, setPosts] = useState([]);
+  const [todos, setTodos] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasNext, sethasNext] = useState(true);
 
-  //data fatch from Api
   const fetchPosts = async (pageNum) => {
     setLoading(true);
     try {
@@ -14,13 +13,15 @@ export default function InfiniteScroll() {
         `https://jsonplaceholder.typicode.com/posts?_limit=10&_page=${pageNum}`
       );
       const data = await res.json();
-      setPosts([...posts, ...data]);
-      //if no data avaliable
+      setTodos([...todos, ...data]);
+
+      //if no data avalible
+
       if (data.length === 0) {
-        setHasMore(false);
+        return sethasNext(false);
       }
     } catch (error) {
-      console.log(error);
+      console.log("erroe", error);
     } finally {
       setLoading(false);
     }
@@ -36,7 +37,7 @@ export default function InfiniteScroll() {
         window.innerHeight + window.scrollY >=
           document.documentElement.scrollHeight - 10 &&
         !loading &&
-        hasMore
+        hasNext
       ) {
         setPage((prev) => prev + 1);
       }
@@ -45,12 +46,12 @@ export default function InfiniteScroll() {
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading, hasMore]);
+  }, [loading, hasNext]);
   return (
     <div className="p-4 w-[400px] mx-auto">
       <h2 className="text-xl font-bold mb-4">Infinite Scroll</h2>
       <ul className="space-y-3">
-        {posts.map((post) => (
+        {todos.map((post) => (
           <li key={post.id} className="border p-2 rounded shadow-sm bg-white">
             <p className="font-semibold">{post.title}</p>
             <p className="text-sm text-gray-600">{post.body}</p>
@@ -59,7 +60,7 @@ export default function InfiniteScroll() {
       </ul>
       {/* Loader */}
       {loading && <p className="text-center mt-4">Loading...</p>}
-      {!hasMore && <p className="text-center mt-4">No more posts</p>}
+      {!hasNext && <p className="text-center mt-4">No more posts</p>}
     </div>
   );
 }
