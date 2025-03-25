@@ -1,33 +1,28 @@
 import React from "react";
-import StarRating from "./practice/star_rating/StarRating";
-import Accordion from "./practice/accordion/Accordion";
+import Tabs from "./practice/tabs/Tabs";
 
 export default function App() {
-  const item = [
+  const tabs = [
     {
-      id: 0,
-      title: "Accordion one",
-      content:
-        "This is accordion project. I have completed html, css, javascript, react, tailwind and next.js as afront end developer. Now i am learning backend development",
+      title: "Tab one",
+      description:
+        "This is tab one. This is tab one. This is tab one. This is tab one.",
     },
 
     {
-      id: 1,
-      title: "Accordion two",
-      content:
-        "This is accordion project. I have completed html, css, javascript, react, tailwind and next.js as afront end developer. Now i am learning backend development",
+      title: "Tab two",
+      description:
+        "This is tab two. This is tab one. This is tab one. This is tab one.",
     },
-
     {
-      id: 3,
-      title: "Accordion three",
-      content:
-        "This is accordion project. I have completed html, css, javascript, react, tailwind and next.js as afront end developer. Now i am learning backend development",
+      title: "Tab three",
+      description:
+        "This is tab three. This is tab one. This is tab one. This is tab one.",
     },
   ];
   return (
-    <>
-      <Accordion items={item} />
-    </>
+    <div>
+      <Tabs tabs={tabs} />
+    </div>
   );
 }
